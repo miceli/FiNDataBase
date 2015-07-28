@@ -1,4 +1,4 @@
 FiNDataBase
 ===========
 
-Database design and SQLite procedures set to create, manage and update a database for financial applications.
+Database design to manage and update a database for financial applications, especially on BM&FBovespa data.
