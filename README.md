@@ -1,4 +1,4 @@
-FutDataSet
+SDF
 ===========
-
-Database design to manage and update a database for financial applications, especially on BM&F Futures dataset.
+Simple Data Base for Financial dataset.
+It's design to manage data especially from BM&F Futures.
