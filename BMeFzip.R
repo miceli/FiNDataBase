@@ -1,3 +1,5 @@
+library(gdata)
+
 readBMFzip <- function(zipfile) {
 ### Read the BM&FBovespa Historical data in the "information recovery" page: http://www2.bmf.com.br/Mais/Index.html?Idioma=pt-br
 ### Note the site must be in portuguese and the file is "Resumo estatítico do pregão"
