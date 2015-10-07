@@ -59,7 +59,7 @@ dados <- transform(dados, "Month" = m, "Year" = y)
 
 # Selected Commodities
 mercadorias <- c("WIN", "DDI", "DOL", "EUR", "DI1", "IND",
-                 "FRC", "WDO", "WEU", "DR1", "IRI")
+                 "FRC", "WDO", "WEU", "DR1", "IR1")
 
 # Referência do Resumo ("Reference")
 ref.resumo <- "MERC"  
