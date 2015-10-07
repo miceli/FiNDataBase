@@ -1,5 +1,6 @@
 library(gdata)
 
+################################################################################################################
 readBMFzip <- function(zipfile) {
 ### Read the BM&FBovespa Historical data in the "information recovery" page: http://www2.bmf.com.br/Mais/Index.html?Idioma=pt-br
 ### Note the site must be in portuguese and the file is "Resumo estatítico do pregão"
@@ -39,3 +40,63 @@ readBMFzip <- function(zipfile) {
   }
 return(dados)
 }
+
+################################################################################################################
+BMeFDadaCatch <- function(InputFile){
+# Read the zip BM&F derivatives markets file from "information recovery" page: http://www2.bmf.com.br/Mais/Index.html?Idioma=pt-br
+# the file is "resumo estatístico do pregão" with all fields selected.
+# The function selects some fields and returns a data.frame.
+# It uses the readBMFzip function to read the data.  
+  
+print(paste("Put to read", InputFile))
+  
+dados <- readBMFzip(zipfile = InputFile)
+
+m <- as.numeric(format(dados[,16], "%m"))
+y <- as.numeric(format(dados[,16], "%Y"))
+
+dados <- transform(dados, "Month" = m, "Year" = y)
+
+# Selected Commodities
+mercadorias <- c("WIN", "DDI", "DOL", "EUR", "DI1", "IND",
+                 "FRC", "WDO", "WEU", "DR1", "IRI")
+
+# Referência do Resumo ("Reference")
+ref.resumo <- "MERC"  
+
+# Type of Market: Future Market
+mercado    <- 2 
+
+# Data Fields
+campos <- c("Commodity"       = 30,
+            "Date"            =  1,
+            "Maturity Month"  = 59,
+            "Maturity Year"   = 60,
+            "Sequence"        = 54,
+            "Serie"           = 32,
+            "Maturity Date"   = 16,
+            "Days"            = 18,
+            "Business Days"   = 19,
+            "Price-Open"      = 12,
+            "Price-High"      = 25,
+            "Price-Low"       = 28,
+            "Price-Last"      = 13,
+            "Price-Adjust"    = 11,
+            "Price-Average"   = 14,
+            "Open Interest"   =  6,
+            "Open Interest (end)"   =  5,
+            "Traded Contracts" = 7,
+            "Trades"          = 31,
+            "Contract Size"   = 48,
+            "Volume BRL"      = 57,
+            "Volume USD"      = 58)
+
+filtro <- subset(dados, dados[,2]  == ref.resumo & 
+                   dados[,29] == mercado & 
+                   dados[,30] %in% mercadorias, select = campos)
+
+names(filtro) <- names(campos)
+
+return(filtro)
+}
+
